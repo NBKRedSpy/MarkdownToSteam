@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MarkdownToSteam": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"C:\\src\\stacklands\\StackFurther\\README.md1\" -o c:\\work\\steam.txt"
+    }
+  }
+}
