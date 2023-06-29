@@ -6,14 +6,23 @@ namespace MarkdownToSteam
 {
 	public class ParagraphRenderBbCode : HtmlObjectRenderer<ParagraphBlock>
 	{
-		protected override void Write(HtmlRenderer renderer, ParagraphBlock obj)
+        public static bool SkipNewLine { get; set; }
+
+        protected override void Write(HtmlRenderer renderer, ParagraphBlock obj)
 		{
-			if(!renderer.ImplicitParagraph)
+
+			if (!renderer.ImplicitParagraph)
 			{
 				renderer.WriteLine();
 			}
-			
+
 			renderer.WriteLeafInline(obj);
+
+			if(SkipNewLine)
+			{
+				SkipNewLine = false;
+				return;
+			}
 
 			renderer.EnsureLine();
 		}

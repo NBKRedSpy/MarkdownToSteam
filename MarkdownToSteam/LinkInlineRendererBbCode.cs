@@ -20,9 +20,20 @@ public class LinkInlineRendererBbCode : HtmlObjectRenderer<LinkInline>
 		//Remove any images that are relative.  These are generally from GitHub.
 		if(link.IsImage && link.Url?.StartsWith("http", StringComparison.OrdinalIgnoreCase) == false)
 		{
+			ParagraphRenderBbCode.SkipNewLine = true;
 			return;
 		}
 
+		string? linkLiteralText = GetLinkText(link);
+		if (!link.IsImage && link.Url == linkLiteralText)
+		{
+			//Do not encode as [url] if this is a plain link.
+			//Oddly Steam will flag GitHub links wrapped in a url dangerous.
+			//This allows the user to declare if they want a [url] or not.
+			renderer.Write(link.Url);
+			return;
+
+		}
 		renderer.Write(link.IsImage ? "[img]" : "[url=");
 		renderer.WriteEscapeUrl(link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url : link.Url);
 		if (!link.IsImage)
@@ -43,5 +54,17 @@ public class LinkInlineRendererBbCode : HtmlObjectRenderer<LinkInline>
 			}
 			renderer.Write("[/url]");
 		}
+	}
+
+	private string? GetLinkText(LinkInline link)
+	{
+		var content = link.Descendants<LiteralInline>().FirstOrDefault()?.Content;
+
+		if(content is null)
+		{
+			return null;
+		}
+
+		return content.Value.Text.Substring(content.Value.Start, content.Value.Length);
 	}
 }
