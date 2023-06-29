@@ -49,7 +49,10 @@ public class HeadingRendererBbCode : HtmlObjectRenderer<HeadingBlock>
 		renderer.Write("[/");
 		renderer.Write(headingText);
 		renderer.WriteLine("]");
-		renderer.WriteLine();
+
+		//Compensates for markdown which has a line feed after the header,
+		//which is usually ignored by MD
+		renderer.EnsureLine();
 
 	}
 }

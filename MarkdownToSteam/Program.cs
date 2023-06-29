@@ -6,6 +6,8 @@ using Markdig;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Renderers.Html.Inlines;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 
 namespace MarkdownToSteam
 {
@@ -52,6 +54,24 @@ namespace MarkdownToSteam
 		static void Convert(string readmeFile, string? outputFile)
 		{
 
+
+			//Debug
+			using TextWriter writer = outputFile == null ?
+				new StringWriter() : new StreamWriter(outputFile) { AutoFlush = true };
+			//new StringWriter() : new StreamWriter(outputFile);
+
+			Convert(readmeFile, writer);
+
+			if(outputFile is null)
+			{
+				Console.Write(writer.ToString());
+			}
+
+		}
+
+		static void Convert(string readmeFile, TextWriter writer)
+		{
+
 			string text = File.ReadAllText(readmeFile);
 
 			var pipe = new MarkdownPipelineBuilder()
@@ -61,23 +81,29 @@ namespace MarkdownToSteam
 
 			var mdDoc = Markdig.Markdown.Parse(text, pipe);
 
-
-			using TextWriter writer = outputFile == null ? 
-				Console.Out : new StreamWriter(outputFile);
-
+			
 			var renderer = new HtmlRenderer(writer);
 
+			renderer.ObjectWriteBefore += Renderer_ObjectWriteBefore;
 			bool removeResult;
 
 			pipe.Setup(renderer);
+			
 			removeResult = renderer.ObjectRenderers.Replace<ParagraphRenderer>(new ParagraphRenderBbCode());
 			removeResult = renderer.ObjectRenderers.Replace<Markdig.Extensions.Tables.HtmlTableRenderer>(new HtmlTableRendererBBCode());
 			removeResult = renderer.ObjectRenderers.Replace<ListRenderer>(new ListRendererBbCode());
 			removeResult = renderer.ObjectRenderers.Replace<HeadingRenderer>(new HeadingRendererBbCode());
 			removeResult = renderer.ObjectRenderers.Replace<LinkInlineRenderer>(new LinkInlineRendererBbCode());
+			removeResult = renderer.ObjectRenderers.Replace<LineBreakInlineRenderer>(new LineBreakInlineRendererBbCode());
+
+			
 
 			renderer.Render(mdDoc);
 			writer.Flush();
+		}
+
+		private static void Renderer_ObjectWriteBefore(IMarkdownRenderer arg1, MarkdownObject arg2)
+		{
 		}
 	}
 }
