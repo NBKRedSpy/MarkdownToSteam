@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "MarkdownToSteam": {
-      "commandName": "Project",
-      "commandLineArgs": "-i \"C:\\work\\s.md\" -o C:\\work\\Steam.txt"
-    }
-  }
-}
