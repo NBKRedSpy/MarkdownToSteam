@@ -83,6 +83,7 @@ namespace MarkdownToSteam
 
 			
 			var renderer = new HtmlRenderer(writer);
+			renderer.EnableHtmlEscape = false;
 
 			renderer.ObjectWriteBefore += Renderer_ObjectWriteBefore;
 			bool removeResult;
@@ -95,6 +96,9 @@ namespace MarkdownToSteam
 			removeResult = renderer.ObjectRenderers.Replace<HeadingRenderer>(new HeadingRendererBbCode());
 			removeResult = renderer.ObjectRenderers.Replace<LinkInlineRenderer>(new LinkInlineRendererBbCode());
 			removeResult = renderer.ObjectRenderers.Replace<LineBreakInlineRenderer>(new LineBreakInlineRendererBbCode());
+			removeResult = renderer.ObjectRenderers.Replace<EmphasisInlineRenderer>(new EmphasisInlineRendererBbCode());
+			removeResult = renderer.ObjectRenderers.Replace<QuoteBlockRenderer>(new QuoteBlockRendererBbCode());
+			removeResult = renderer.ObjectRenderers.Replace<CodeInlineRenderer>(new CodeInlineRendererBBCode());
 
 			
 
