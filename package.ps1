@@ -1,8 +1,12 @@
 $ErrorActionPreference = 'Stop'
 
 
-md -Force -ErrorAction SilentlyContinue ./publish/targets/
-md -Force -ErrorAction SilentlyContinue ./publish/packages/
+md -Force -ErrorAction SilentlyContinue ./publish/targets/ > $null
+md -Force -ErrorAction SilentlyContinue ./publish/packages/ > $null
+
+
+# Requires a clean or the partial trimming will sometimes give trimming issues.
+dotnet clean -c Release
 
 function publishOs($target)
 {
