@@ -1,26 +1,51 @@
 # Markdown To Steam Utility
 
-Converts a markdown formatted file to Steam's proprietary BBCode format.  
+Converts a Markdown formatted file to Steam's proprietary BBCode format.  
 
-## Guide vs Comments Format
-Note that this utility only supports the "comments" and "Workshop descriptions" type format, which is much more limited in formatting than the Steam guide format.
 
-For example, the guide format supports text coloring and code blocks.
+# Need
+This tool is different from many of the other Markdown to Steam BBCode converters as it parses the text using the Markdig library rather than RegEx.  Markdig is a DOM parser which makes Markdown parsing much more accurate.
 
 # Usage
 
-
 ```
-MarkdownToSteam 1.2.0
+MarkdownToSteam 1.3.0
 Copyright (C) 2023 MarkdownToSteam
 
-  -i, --input     Required. The full path to the ReadMe.md file to parse.
+  -i, --input                     Required. The full path to the ReadMe.md file to parse.
 
-  -o, --output    The file to output the result to.  If not provided, will
-                  output to the console
+  -o, --output                    The file to output the result to.  If not provided, will output to the console.
 
-  --help          Display this help screen.
+  -m, --render-relative-images    (Default: false) Does not remove images that have a relative path.
 
-  --version       Display version information.
-```
+  --help                          Display this help screen.
+
+  --version                       Display version information.
+  ```
+
+
+# Steam Formatting Differences
+
+## Inline Code Blocks
+
+Markdown inline code blocks are rendered as italic text since Steam only supports multiline code blocks.
+
+|||
+|--|--|
+|Markdown source|example ```inline code``` example|
+|Steam output|example *inline code* example|
+
+
+## Relative Image Links
+By default, images that have a relative path are automatically removed.  This is to handle
+the common GitHub relative path image linking, which is often simply removed.
+
+Use the `--render-relative-images` option (or `-m` shorthand) to force the links to be rendered.
+
+## Plain Links
+Plain links that are written in plain text not be rended as a "`[url]`"
+
+For example, a plain text link would be `https://example.com` while a Markdown link is `[example](https://example.com)`
+
+The reason is that Steam will flag links such as GitHub as dangerous and prevent navigation.  To force a link to be rendered as a `[url]`, change the Markdown source's url to `[]()` format.
 

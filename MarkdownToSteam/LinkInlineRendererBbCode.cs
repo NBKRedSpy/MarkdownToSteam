@@ -15,10 +15,19 @@ namespace MarkdownToSteam;
 /// <seealso cref="HtmlObjectRenderer{LinkInline}" />
 public class LinkInlineRendererBbCode : HtmlObjectRenderer<LinkInline>
 {
-	protected override void Write(HtmlRenderer renderer, LinkInline link)
+
+    public bool RenderRelativeImageLinks { get; set; }
+
+    public LinkInlineRendererBbCode(bool renderRelativeImageLinks = true)
+    {
+		RenderRelativeImageLinks = renderRelativeImageLinks;
+    }
+
+    protected override void Write(HtmlRenderer renderer, LinkInline link)
 	{
 		//Remove any images that are relative.  These are generally from GitHub.
-		if(link.IsImage && link.Url?.StartsWith("http", StringComparison.OrdinalIgnoreCase) == false)
+		if(!RenderRelativeImageLinks && link.IsImage && 
+			link.Url?.StartsWith("http", StringComparison.OrdinalIgnoreCase) == false)
 		{
 			ParagraphRenderBbCode.SkipNewLine = true;
 			return;
