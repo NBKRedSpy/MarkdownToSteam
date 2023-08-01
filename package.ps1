@@ -18,6 +18,8 @@ function publishOs($target)
 
 publishOs "osx-arm64"
 publishOs "win-x64"
+publishOs "linux-x64"
+publishOs "linux-arm64"
 
 "------------  Files"
 
