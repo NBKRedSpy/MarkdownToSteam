@@ -7,6 +7,7 @@ md -Force -ErrorAction SilentlyContinue ./publish/packages/ > $null
 
 # Requires a clean or the partial trimming will sometimes give trimming issues.
 dotnet clean -c Release
+dotnet build -c Release
 
 function publishOs($target)
 {
