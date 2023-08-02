@@ -37,15 +37,19 @@ Markdown inline code blocks are rendered as italic text since Steam only support
 
 
 ## Relative Image Links
-By default, images that have a relative path are automatically removed.  This is to handle
-the common GitHub relative path image linking, which is often simply removed.
+By default, images that have a relative path such as ```![example](./media/example.png)``` are automatically removed.  However, this can be overridden by using the `--render-relative-images` option (or `-m` shorthand).  
 
-Use the `--render-relative-images` option (or `-m` shorthand) to force the links to be rendered.
+If retained, the user will need to manually change the URL in the Steam output to an absolute path.  Alternatively, the user could change the Markdown source to an absolute path.
+
+Relative images are removed by default since a common course of action is to remove the nonfunctional relative images.  
 
 ## Plain Links
-Plain links that are written in plain text not be rended as a "`[url]`"
+Plain text links will not be wrapped in a Steam "`[url]`" tag.  
 
-For example, a plain text link would be `https://example.com` while a Markdown link is `[example](https://example.com)`
+There is no visual or functional difference in the Steam translation.
 
-The reason is that Steam will flag links such as GitHub as dangerous and prevent navigation.  To force a link to be rendered as a `[url]`, change the Markdown source's url to `[]()` format.
+For example, a plain text link is ```https://example.com```, while a Markdown link is ```[example](https://example.com)```.  The latter will be translated to a `[url]` tag.
 
+
+# Additional Elements
+If there is a Markdown element that is not translated, feel free to create an issue in this repository.
