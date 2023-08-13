@@ -2,7 +2,7 @@ using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax.Inlines;
 
-namespace MarkdownToSteam
+namespace MarkdownToSteam.Renderers
 {
     internal class EmphasisInlineRendererBbCode : HtmlObjectRenderer<EmphasisInline>
     {
@@ -16,17 +16,23 @@ namespace MarkdownToSteam
                 _ => null
             };
 
-            if (tag == null) {
+            if (tag == null)
+            {
                 for (int i = 0; i < obj.DelimiterCount; i++)
                     renderer.Write(obj.DelimiterChar);
-            } else {
+            }
+            else
+            {
                 renderer.Write($"[{tag}]");
             }
             renderer.WriteChildren(obj);
-            if (tag == null) {
+            if (tag == null)
+            {
                 for (int i = 0; i < obj.DelimiterCount; i++)
                     renderer.Write(obj.DelimiterChar);
-            } else {
+            }
+            else
+            {
                 renderer.Write($"[/{tag}]");
             }
         }

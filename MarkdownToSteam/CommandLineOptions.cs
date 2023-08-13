@@ -15,8 +15,12 @@ namespace MarkdownToSteam
 		[Option('o',"output", Required = false, HelpText = "The file to output the result to.  If not provided, will output to the console.")]
 		public string? OutputFile { get; set;}
 
-		[Option('m', "render-relative-images", Required = false, HelpText = "Does not remove images that have a relative path.", Default = false)]
-		public bool RenderRelativeImages { get; set; }
+		[Option('r', "remove-relative-images", Required = false, HelpText = "Removes images that have a relative path")]
+		public bool RemoveRelativeImages { get; set; }
+
+		[Option('b', "base-url", Required = false, HelpText = "Any relative URI's will be converted to absolute URLs using this URL as the base.", Default = "")]
+		public string BaseUri { get; set; } = string.Empty;
+
 
 	}
 }

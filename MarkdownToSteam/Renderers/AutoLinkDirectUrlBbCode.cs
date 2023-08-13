@@ -18,7 +18,7 @@ public class AutoLinkDirectUrlBbCode : HtmlObjectRenderer<AutolinkInline>
 
 	protected override void Write(HtmlRenderer renderer, AutolinkInline obj)
 	{
-			renderer.WriteEscapeUrl(obj.Url);
+		renderer.WriteEscapeUrl(obj.Url);
 	
 	}
 }

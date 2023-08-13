@@ -9,14 +9,16 @@ This tool is different from many of the other Markdown to Steam BBCode converter
 # Usage
 
 ```
-MarkdownToSteam 1.3.0
+MarkdownToSteam 2.0.0
 Copyright (C) 2023 MarkdownToSteam
 
   -i, --input                     Required. The full path to the ReadMe.md file to parse.
 
   -o, --output                    The file to output the result to.  If not provided, will output to the console.
 
-  -m, --render-relative-images    (Default: false) Does not remove images that have a relative path.
+  -r, --remove-relative-images    Removes images that have a relative path
+
+  -b, --base-url                  (Default: ) Any relative URI's will be converted to absolute URLs using this URL as the base.
 
   --help                          Display this help screen.
 
@@ -37,19 +39,35 @@ Markdown inline code blocks are rendered as italic text since Steam only support
 
 
 ## Relative Image Links
-By default, images that have a relative path such as ```![example](./media/example.png)``` are automatically removed.  However, this can be overridden by using the `--render-relative-images` option (or `-m` shorthand).  
+Image links can be processes in a couple of ways:
 
-If retained, the user will need to manually change the URL in the Steam output to an absolute path.  Alternatively, the user could change the Markdown source to an absolute path.
+## Remove
+Using the -r option, relative images links will be completely removed.  
 
-Relative images are removed by default since a common course of action is to remove the nonfunctional relative images.  
+This can be used to avoid relying on a resource external to Steam and avoid needing to remove the links manually.  The user would normally upload the images to the Mod's images area.
+
+## Absolute Uri Base Path
+Using the -b option, the user can provide a base URI.  That URI will be combined with any relative image URIs to create an absolute URI.
+
+For example, directly linking github images:
+
+Base URI:
+```https://raw.githubusercontent.com/SomeUser/SomeRepo/master/```
+
+Markdown image relative link:
+```![Counters Example](media/Example%20Diagram.png)```
+
+BBCode Result:
+```[img]https://raw.githubusercontent.com/SomeUser/SomeRepo/master/media/Example%20Diagram.png[/img]```
+
+
 
 ## Plain Links
-Plain text links will not be wrapped in a Steam "`[url]`" tag.  
+A link which is either plain text or use the same text for the link and the literal will not be rendered as a Steam `[url]` tag.
+
+For example, ```https://example.com``` and ```(https://example.com)[https://example.com]``` will both be rendered as ```https://example.com```
 
 There is no visual or functional difference in the Steam translation.
 
-For example, a plain text link is ```https://example.com```, while a Markdown link is ```[example](https://example.com)```.  The latter will be translated to a `[url]` tag.
-
-
 # Additional Elements
-If there is a Markdown element that is not translated, feel free to create an issue in this repository.
+If there is a Markdown element that is not translated, feel free to create an issue or contribute to this repo.

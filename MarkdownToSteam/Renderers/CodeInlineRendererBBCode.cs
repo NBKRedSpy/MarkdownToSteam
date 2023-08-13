@@ -2,7 +2,7 @@ using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax.Inlines;
 
-namespace MarkdownToSteam
+namespace MarkdownToSteam.Renderers
 {
     internal class CodeInlineRendererBBCode : HtmlObjectRenderer<CodeInline>
     {
