@@ -41,12 +41,12 @@ Markdown inline code blocks are rendered as italic text since Steam only support
 ## Relative Image Links
 Image links can be processes in a couple of ways:
 
-## Remove
+### Remove
 Using the -r option, relative images links will be completely removed.  
 
 This can be used to avoid relying on a resource external to Steam and avoid needing to remove the links manually.  The user would normally upload the images to the Mod's images area.
 
-## Absolute Uri Base Path
+### Absolute Uri Base Path
 Using the -b option, the user can provide a base URI.  That URI will be combined with any relative image URIs to create an absolute URI.
 
 For example, directly linking github images:
