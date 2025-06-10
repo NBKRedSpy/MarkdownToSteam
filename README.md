@@ -65,7 +65,7 @@ BBCode Result:
 ## Plain Links
 A link which is either plain text or use the same text for the link and the literal will not be rendered as a Steam `[url]` tag.
 
-For example, ```https://example.com``` and ```(https://example.com)[https://example.com]``` will both be rendered as ```https://example.com```
+For example, ```https://example.com``` and ```[https://example.com](https://example.com)``` will both be rendered as ```https://example.com```
 
 There is no visual or functional difference in the Steam translation.
 
